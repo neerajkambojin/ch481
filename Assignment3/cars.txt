@@ -1,0 +1,13 @@
+The car with the highest price which Amay can buy under Rs. 11 lakhs is 6 at Rs. 10.4 (Original price : Rs. 13 lakh).
+Amay has the following options under Rs. 11 lakh:
+Car Number : Price(In lakhs)
+     1    :   9.600000000000001
+     2    :   8.8
+     3    :   6.3
+     4    :   5.4
+     6    :   10.4
+     7    :   8.55
+     8    :   7.2
+     9    :   10.0
+     10    :   5.8500000000000005
+Total options: 9

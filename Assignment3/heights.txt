@@ -1,0 +1,12 @@
+Student1 : 4.5
+Student2 : 4.9
+Student3 : 4.8
+Student4 : 5.3
+Student5 : 5.7
+Student6 : 5.0
+Student7 : 4.8
+Student8 : 5.2
+Student9 : 4.7
+Student10 : 5.1
+Student11 : 4.4
+Student12 : 4.9
