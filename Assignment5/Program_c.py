@@ -1,12 +1,14 @@
 # The drunk particle
 import numpy as np; import matplotlib.pyplot as plt
 
-x0 = 0
+x0 = 0 # Initial position
 
-ind_steps = [x0]
-means = []
-avg_square = []
-for time in range(1000):
+ind_steps = [x0] #Individual steps
+means = [] # Initialising average values
+avg_square = [] # Initialising square average values
+
+# Simulating trajectory 1000 times
+for time in range(1, 1001):
     a = np.random.uniform(-5,5)
     x0 += a
     ind_steps.append(x0)
@@ -14,9 +16,11 @@ for time in range(1000):
     mean = np.mean(ind_steps)
     means.append(mean)
 
-plt.plot(means, 'g')
-plt.plot(ind_steps, 'r')
-plt.plot(avg_square, 'y')
+# Plots
+plt.plot(means, 'g--', label = 'Mean')
+plt.plot(avg_square, 'y', label = 'Square Mean')
+plt.xlabel('Time')
+plt.ylabel('Position')
+plt.legend()
+plt.title("Plots for positions of 'Drunk' particle")
 plt.show()
-
-print(means)
