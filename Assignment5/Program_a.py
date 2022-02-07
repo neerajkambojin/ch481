@@ -22,3 +22,4 @@ while abs(x1 - x2) >= 2*tol_limit: # Setting tolerance limit
 print(f'Root: {x3}')
 print('The iterative values are:')
 print(iterative_values)
+print(f'{len(iterative_values)} iterations.')
