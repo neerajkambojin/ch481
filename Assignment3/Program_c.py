@@ -1,12 +1,13 @@
 # Cars
 
-cars = {'1':12,'2':11,'3':7,'4':6,'5':14.5,'6':13,'7':9.5,'8':8,'9':12.5,'10':6.5} # Making dictionary of cars
+cars = {'1': 12, '2': 11, '3': 7, '4': 6, '5': 14.5, '6': 13, '7': 9.5, '8': 8, '9': 12.5,
+        '10': 6.5}  # Making dictionary of cars
 
-#Updating car prices according to discounts
+# Updating car prices according to discounts
 updated = {}
 for car in cars:
     if cars[car] < 10:
-        updated[car] = cars[car]*0.9
+        updated[car] = cars[car] * 0.9
     else:
         updated[car] = cars[car] * 0.8
 
@@ -14,18 +15,18 @@ for car in cars:
 amay_money = 11
 affordable = {}
 
-#Applying discounts
+# Applying discounts
 for key in updated:
     if updated[key] <= 11:
         affordable[key] = updated[key]
 
-max_possible = max(affordable.values()) # Getting highest priced car under affordable options
+max_possible = max(affordable.values())  # Getting highest priced car under affordable options
 
 for car_number in affordable:
-    if affordable[car_number] == max_possible: # Getting car number of the highest affordable car
+    if affordable[car_number] == max_possible:  # Getting car number of the highest affordable car
         break
 
-#Printing output
+# Printing output
 print(f'The car with the highest price which Amay can buy under Rs. 11 lakhs is {car_number} at Rs. {max_possible} '
       f'(Original price : Rs. {cars[car_number]} lakh).\n')
 print('Car Number : Price(In lakhs)')
@@ -35,8 +36,9 @@ print(f'Total options: {len(affordable)}')
 
 # Writing output to file
 with open('cars.txt', 'w') as file:
-    file.write(f'The car with the highest price which Amay can buy under Rs. 11 lakhs is {car_number} at Rs. {max_possible} '
-      f'(Original price : Rs. {cars[car_number]} lakh).\n')
+    file.write(
+        f'The car with the highest price which Amay can buy under Rs. 11 lakhs is {car_number} at Rs. {max_possible} '
+        f'(Original price : Rs. {cars[car_number]} lakh).\n')
     file.write('Amay has the following options under Rs. 11 lakh:\n')
     file.write('Car Number : Price(In lakhs)\n')
     for car in affordable:
