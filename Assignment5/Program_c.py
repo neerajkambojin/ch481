@@ -18,13 +18,13 @@ for time in range(1, 1001):
     means.append(mean)
     rms = np.sqrt(np.sum(np.square(ind_steps)) / len(ind_steps))
     squares_avg.append(rms)
-    mean_square = np.sum(np.square(ind_steps)) / len(ind_steps)
-    mean_squares.append(mean_square)
+    # mean_square = np.sum(np.square(ind_steps)) / len(ind_steps)
+    # mean_squares.append(mean_square)
 
 # Plots
 plt.plot(means, 'g--', label='Mean')
 plt.plot(squares_avg, 'y', label='Root mean square')
-plt.plot(mean_squares, 'r:', label='Mean Square')
+# plt.plot(mean_squares, 'r:', label='Mean Square')
 plt.xlabel('Time')
 plt.ylabel('Position')
 plt.legend()

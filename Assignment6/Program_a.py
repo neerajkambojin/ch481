@@ -1,18 +1,30 @@
-# Linear interpolation using newtons's divided difference method
+
+def range_detector(function):
+    x_values = list(function.keys())
+    x_values.sort()
+    if x > x_values[-1]:
+        low, high = x_values[-2:]
+    elif x < x_values[0]:
+        low, high = x_values[:2]
+    else:
+        for i in x_values:
+            if i <= x:
+                low = i
+        for i in x_values:
+            if i >= x:
+                high = i
+                break
+    return low, high
+def interpolation(x,x1,x2):
+    print(f'x1 = {x1}, x2 = {x2}')
+    if x in function_values.keys():
+        print(f'Value at x = {x} : {function_values[x]}')
+    else:
+        slope = (function_values[x2] - function_values[x1]) / (x2 - x1)
+        output = function_values[x1] + slope * (x - x1)
+        print(f'Value at x = {x} : {output}')
 
 function_values = {0.1 : 1.4, 0.2 : 1.56, 0.3 : 1.76, 0.4 : 2.0, 0.5 : 2.28}
-
-x = float(input('Enter the number: '))
-x1 = 0
-x2 = 0
-for i in function_values:
-    if i < x and x-i < x - x1:
-        x1 = i
-for i in function_values:
-    if i > x and i - x < i - x1:
-        x2 = i
-print(x1,x2)
-slope = (function_values[x2]-function_values[x1])/(x2-x1)
-
-equation = function_values[x1] + slope*(x - x1)
-print(equation)
+x = float(input('Enter x: '))
+x1, x2 = range_detector(function_values)
+interpolation(x,x1,x2)
