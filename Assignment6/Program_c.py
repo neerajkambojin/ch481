@@ -1,5 +1,6 @@
 import numpy as np
 
+# Writing equations in matrix form
 matrix = np.array([[0, 2, 0, 1, 0],
                    [2, 2, 3, 2, -2],
                    [4, -3, 0, 1, -7],
