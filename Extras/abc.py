@@ -1,6 +1,17 @@
-import numpy as np
+import math
 
-arr = np.empty((5,5))
-for i in range(1,6):
-    for j in range(1,6):
-        arr[i-1][j-1] = i**2 + j + 1
+
+class Circle:
+    def __init__(self, r):
+        self.r = r
+
+    def area(self):
+        print("Area is ", math.pi*self.r*self.r)
+
+    def circum(self):
+        print(f"Circumference is {2*math.pi*self.r}")
+
+circle1 = Circle(45)
+
+circle1.area()
+circle1.circum()

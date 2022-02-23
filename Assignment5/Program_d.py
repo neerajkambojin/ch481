@@ -29,5 +29,5 @@ with open('Visit.txt', 'w') as visits:
         if hours == 12:
             vel = 'pm'
         if f'{hours}:{minutes}' == '13:00':
-            hours = 1;
+            hours = 1
             minutes = '00'
