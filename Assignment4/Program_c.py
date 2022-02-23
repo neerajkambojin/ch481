@@ -5,7 +5,7 @@ matrix_A = np.array([[5, 3, 9, 4, 2, 0],
                      [8, 3, 4, -1, 5, 1],
                      [0, 2, 4, -2, 8, 5]])
 
-new_matrix = np.empty((0, 6), int)  # Generating empty matrix
+new_matrix = np.empty((0, 6), float)
 for row in matrix_A:
     row = sorted(row, reverse=True)  # Sorting rows
     new_matrix = np.vstack((new_matrix, row))  # Adding sorted rows to new matrix
