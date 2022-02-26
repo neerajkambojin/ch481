@@ -11,4 +11,4 @@ def value(i):
         return val
 
 
-print(value(10))
+value(10)
