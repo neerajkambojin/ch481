@@ -1,25 +1,25 @@
 import numpy as np
 
 
-def appender(matrix, y):
-    matrix = np.hstack((matrix, y))
+def appender(matrix, y):  # Defining functions for appending, pivoting, elimination and back substtution
+    matrix = np.hstack((matrix, y))  # Appends y values to matrix
     return matrix
 
 
 def pivoter(matrix, i, mat_len):
     for j in range(mat_len - i):
-        if abs(matrix[j + i, i]) == max(abs(matrix[i:, i])):
-            matrix[[i, j + i]] = matrix[[j + i, i]]
+        if abs(matrix[j + i, i]) == max(abs(matrix[i:, i])):  # Finding row containing the largest element
+            matrix[[i, j + i]] = matrix[[j + i, i]]  # Pivoting
     return matrix
 
 
 def eliminator(matrix, i, mat_len):
     for j in range(mat_len - i - 1):
-        matrix[i + j + 1] = matrix[i + j + 1] - (matrix[i] * matrix[i + j + 1, i]) / matrix[i, i]
+        matrix[i + j + 1] = matrix[i + j + 1] - (matrix[i] * matrix[i + j + 1, i]) / matrix[i, i]  # Elimination
     return matrix
 
 
-def back_sub(matrix, mat_len, solutions):
+def back_sub(matrix, mat_len, solutions):  # Back substitution
     for i in range(mat_len):
         sum = 0
         for j in range(i):
@@ -29,7 +29,7 @@ def back_sub(matrix, mat_len, solutions):
     return solutions
 
 
-def gauss_elm(matrix, y):
+def gauss_elm(matrix, y): # Combining all functions
     mat_len = len(matrix)
     print("Matrix: \n", matrix)
     print("Y: \n", y)
