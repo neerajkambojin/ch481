@@ -1,3 +1,5 @@
+# Gaussian Elimination
+
 import numpy as np
 
 
@@ -46,7 +48,7 @@ def gauss_elm(matrix, y): # Combining all functions
 
     print("Solutions: ")
     for i in range(mat_len):
-        print(f"X{i + 1} = {solutions[i]}")
+        print(f"X{i + 1} = {round(solutions[i], 10)}")
 
 
 try:

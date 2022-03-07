@@ -12,14 +12,13 @@ pi = probability * 4 # because probability = pi/4
 
 import numpy as np
 
-i = 0
 n = int(input("How many pairs: "))
 
-# Generating 10000 pairs of uniform random distribution b/w -1 and +1
+i = 0
 for j in range(n):
-    x = np.random.uniform(-1, 1, 2)
+    x = np.random.uniform(-1, 1, 2)     # Generating N pairs of uniform random distribution b/w -1 and +1
     if np.sum(np.square(x)) <= 1:  # No need to sqrt because for number less than or equal to 1 will have sqrt <= 1
-        i += 1
+        i += 1          # Counting pairs with length <= 1
 
 prob = i / n
 print(f"Probability : {prob}")
