@@ -13,7 +13,7 @@ pi = probability * 4 # because probability = pi/4
 import numpy as np
 
 try:
-    n = int(input("How many pairs Hit enter to select default value of 10,000): "))
+    n = int(input("How many pairs (Hit enter to select default value of 10,000): "))
 except ValueError:
     n = 10000
 
