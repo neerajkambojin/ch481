@@ -12,7 +12,10 @@ pi = probability * 4 # because probability = pi/4
 
 import numpy as np
 
-n = int(input("How many pairs: "))
+try:
+    n = int(input("How many pairs Hit enter to select default value of 10,000): "))
+except ValueError:
+    n = 10000
 
 i = 0
 for j in range(n):
@@ -21,5 +24,6 @@ for j in range(n):
         i += 1          # Counting pairs with length <= 1
 
 prob = i / n
+print(f"Pairs: {n}")
 print(f"Probability : {prob}")
 print(f"Value of pi : {prob * 4}")  # From given formula
