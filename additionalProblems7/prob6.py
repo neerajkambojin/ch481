@@ -17,7 +17,7 @@ def is_daig(matrix):
             if i != j:
                 if matrix[i, j] != 0:
                     print("Nope")
-                    return False
+                    return
     else:
         print("Yup")
 
