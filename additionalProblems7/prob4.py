@@ -11,7 +11,7 @@ def bitodeci(binum):
         decinum = 0
         for i in range(binum_len):
             decinum += (pow(2, binum_len - 1 - i)) * int(binum[i])
-        print(decinum)
+        return (decinum)
 
 
-bitodeci(binum)
+print(f"Decimal number: {bitodeci(binum)}")
