@@ -5,11 +5,11 @@ import numpy as np
 
 def pivote_pi(matrix, i, mat_len):
     global pi, swap
-    pi = np.identity(mat_len)
+    pi = np.identity(mat_len)  # Initializing Pi
     for j in range(mat_len - i):
         if abs(matrix[j + i, i]) == max(abs(matrix[i:, i])):  # Finding row containing the largest element
             matrix[[i, j + i]] = matrix[[j + i, i]]  # Pivoting
-            if j + i != i:
+            if j + i != i:  # To count number of swaps
                 swap = 1
             else:
                 swap = 0
@@ -20,11 +20,11 @@ def pivote_pi(matrix, i, mat_len):
 
 def eliminate_li(matrix, i, mat_len):
     global li
-    li = np.identity(mat_len)
+    li = np.identity(mat_len)  # Initializing Pi
     for j in range(mat_len - i - 1):
         fact = (matrix[i + j + 1, i]) / matrix[i, i]
         matrix[i + j + 1] -= (matrix[i] * fact)  # Elimination
-        li[i + j + 1, i] = fact
+        li[i + j + 1, i] = fact  # Generating Li
     return matrix, li
 
 
@@ -41,10 +41,10 @@ def lu_det(matrix):
         ptot = np.matmul(ptot, pi)
         eliminate_li(matrix, i, mat_len)
         ltot = np.matmul(pi, np.matmul(ltot, np.matmul(pi, li)))
-    p,u = ptot, matrix
+    p, u = ptot, matrix
     det_p = np.power(-1, count)
-    det_u = np.prod(np.diag(u))
-    print(f"\nDeterminant: {round(det_u*det_p, 10)}")
+    det_u = np.prod(np.diag(u))  # l not required as its diagonal contains 1s and hence its det = 1
+    print(f"\nDeterminant: {round(det_u * det_p, 10)}")
 
 
 try:
