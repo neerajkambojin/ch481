@@ -12,6 +12,7 @@ def fun(x):
     return np.exp(-x) + (4 * (x ** 3)) - 5  # Function for calculating value of polynomial for given x
 
 
+x3 = None
 while abs(x1 - x2) >= 2 * tol_limit:  # Setting tolerance limit
     x3 = (x1 + x2) / 2
     iterative_values.append(x3)

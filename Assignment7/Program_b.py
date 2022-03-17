@@ -3,52 +3,53 @@
 import numpy as np
 
 
-def appender(matrix, y):  # Defining functions for appending, pivoting, elimination and back substtution
-    matrix = np.hstack((matrix, y))  # Appends y values to matrix
-    return matrix
+def appender(mat, y0):  # Defining functions for appending, pivoting, elimination and back substtution
+    mat = np.hstack((mat, y0))  # Appends y values to matrix
+    return mat
 
 
-def pivoter(matrix, i, mat_len):
-    for j in range(mat_len - i):
-        if abs(matrix[j + i, i]) == max(abs(matrix[i:, i])):  # Finding row containing the largest element
-            matrix[[i, j + i]] = matrix[[j + i, i]]  # Pivoting
-    return matrix
+def pivoter(mat, i_val, ml):
+    for j_val in range(ml - i_val):
+        if abs(mat[j_val + i_val, i_val]) == max(abs(mat[i_val:, i_val])):  # Finding row containing the largest element
+            mat[[i_val, j_val + i_val]] = mat[[j_val + i_val, i_val]]  # Pivoting
+    return mat
 
 
-def eliminator(matrix, i, mat_len):
-    for j in range(mat_len - i - 1):
-        matrix[i + j + 1] = matrix[i + j + 1] - (matrix[i] * matrix[i + j + 1, i]) / matrix[i, i]  # Elimination
-    return matrix
+def eliminator(mat, i_val, ml):
+    for j_val in range(ml - i_val - 1):
+        mat[i_val + j_val + 1] = mat[i_val + j_val + 1] - (mat[i_val] * mat[i_val + j_val + 1, i_val]) / mat[
+            i_val, i_val]  # Elimination
+    return mat
 
 
-def back_sub(matrix, mat_len, solutions):  # Back substitution
-    for i in range(mat_len):
-        sum = 0
-        for j in range(i):
-            sum += (matrix[mat_len - i - 1, mat_len - j - 1]) * solutions[mat_len - j - 1]
-        solutions[mat_len - i - 1] = (matrix[mat_len - i - 1, -1] - sum) / matrix[mat_len - i - 1, mat_len - i - 1]
+def back_sub(mat, ml, solutions):  # Back substitution
+    for i_val in range(ml):
+        addition = 0
+        for j_val in range(i_val):
+            addition += (mat[ml - i_val - 1, ml - j_val - 1]) * solutions[ml - j_val - 1]
+        solutions[ml - i_val - 1] = (mat[ml - i_val - 1, -1] - addition) / mat[ml - i_val - 1, ml - i_val - 1]
 
     return solutions
 
 
-def gauss_elm(matrix, y): # Combining all functions
-    mat_len = len(matrix)
-    print("Matrix: \n", matrix)
-    print("Y: \n", y)
-    matrix = appender(matrix, y)
+def gauss_elm(mat, y0):  # Combining all functions
+    ml = len(mat)
+    print("Matrix: \n", mat)
+    print("Y: \n", y0)
+    mat = appender(mat, y0)
 
-    i = 0
-    while i < mat_len:
-        matrix = pivoter(matrix, i, mat_len)
-        matrix = eliminator(matrix, i, mat_len)
-        i += 1
+    i_val = 0
+    while i_val < ml:
+        mat = pivoter(mat, i_val, ml)
+        mat = eliminator(mat, i_val, ml)
+        i_val += 1
 
-    solutions = np.zeros((mat_len))
-    solutions = back_sub(matrix, mat_len, solutions)
+    solutions = np.zeros(ml)
+    solutions = back_sub(mat, ml, solutions)
 
     print("Solutions: ")
-    for i in range(mat_len):
-        print(f"X{i + 1} = {round(solutions[i], 10)}")
+    for i_val in range(ml):
+        print(f"X{i_val + 1} = {round(solutions[i_val], 10)}")
 
 
 try:

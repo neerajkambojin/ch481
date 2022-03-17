@@ -2,11 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt  # Importing numpy and pyplot modules
 
 
-def fibo_series(i):  # Defining recursive function for generating Fibonacci series
-    if i <= 1:
-        return i
+def fibo_series(step):  # Defining recursive function for generating Fibonacci series
+    if step <= 1:
+        return step
     else:
-        return fibo_series(i - 1) + fibo_series(i - 2)
+        return fibo_series(step - 1) + fibo_series(step - 2)
 
 
 number = 14

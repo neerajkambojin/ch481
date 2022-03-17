@@ -21,7 +21,7 @@ for key in updated:
         affordable[key] = updated[key]
 
 max_possible = max(affordable.values())  # Getting highest priced car under affordable options
-
+car_number = None
 for car_number in affordable:
     if affordable[car_number] == max_possible:  # Getting car number of the highest affordable car
         break

@@ -3,36 +3,36 @@ import numpy as np
 import random
 
 
-def pivote_pi(matrix, i, mat_len):  # Function for pivoting and generating permutation matrix Pi
+def pivote_pi(mat, i_val, ml):  # Function for pivoting and generating permutation matrix Pi
     global pi
-    pi = np.identity(mat_len)  # Initializing Pi
-    for j in range(mat_len - i):
-        if abs(matrix[j + i, i]) == max(abs(matrix[i:, i])):  # Finding row containing the largest element
-            matrix[[i, j + i]] = matrix[[j + i, i]]  # Pivoting
-            pi[[i, j + i]] = pi[[j + i, i]]  # Generating Pi
-    return matrix, pi
+    pi = np.identity(ml)  # Initializing Pi
+    for j in range(ml - i_val):
+        if abs(mat[j + i_val, i_val]) == max(abs(mat[i_val:, i_val])):  # Finding row containing the largest element
+            mat[[i_val, j + i_val]] = mat[[j + i_val, i_val]]  # Pivoting
+            pi[[i_val, j + i_val]] = pi[[j + i_val, i_val]]  # Generating Pi
+    return mat, pi
 
 
-def eliminate_li(matrix, i, mat_len):  # For elimination and Li
+def eliminate_li(mat, i_val, ml):  # For elimination and Li
     global li
-    li = np.identity(mat_len)  # Initializing Li
-    for j in range(mat_len - i - 1):
-        fact = (matrix[i + j + 1, i]) / matrix[i, i]
-        matrix[i + j + 1] -= (matrix[i] * fact)  # Elimination
-        li[i + j + 1, i] = fact  # Generating Li
-    return matrix, li
+    li = np.identity(ml)  # Initializing Li
+    for j in range(ml - i_val - 1):
+        fact = (mat[i_val + j + 1, i_val]) / mat[i_val, i_val]
+        mat[i_val + j + 1] -= (mat[i_val] * fact)  # Elimination
+        li[i_val + j + 1, i_val] = fact  # Generating Li
+    return mat, li
 
 
-def lu_decompose(matrix):
-    mat_len = len(matrix)
+def lu_decompose(mat):
+    mat_len = len(mat)
     ptot = np.identity(mat_len)  # Initializing Ptot
     ltot = np.identity(mat_len)  # Initializing Ltot
     for i in range(mat_len):
-        pivote_pi(matrix, i, mat_len)
+        pivote_pi(mat, i, mat_len)
         ptot = np.matmul(ptot, pi)
-        eliminate_li(matrix, i, mat_len)
+        eliminate_li(mat, i, mat_len)
         ltot = np.matmul(pi, np.matmul(ltot, np.matmul(pi, li)))
-    p, l, u = ptot, ltot, matrix
+    p, l, u = ptot, ltot, mat
     # Printing outputs
     print("P: ")
     print(p)
@@ -41,7 +41,7 @@ def lu_decompose(matrix):
     print("U: ")
     print(np.round(u, 10))
     print("Original Matrix (P.L.U): ")
-    print(np.matmul(ptot, np.matmul(ltot, matrix)))
+    print(np.matmul(ptot, np.matmul(ltot, mat)))
     return p, l, u  # Optional, as we're already printing out values
 
 

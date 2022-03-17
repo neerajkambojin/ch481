@@ -12,15 +12,15 @@ average_height = total / count  # Calculating average height
 
 print(f'\nThe average height is {average_height}\n')  # Printing average height
 
-sum = 0
+addition = 0
 
 # Calculation of standard deviation
 
 for height in heights:
     difference = (height - average_height) ** 2
 
-    sum += difference
+    addition += difference
 
-std = math.sqrt(sum / count)
+std = math.sqrt(addition / count)
 
 print(f'The standard deviation is {std}')  # Printing standard deviation
