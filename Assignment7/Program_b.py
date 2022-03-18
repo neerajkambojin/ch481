@@ -22,7 +22,7 @@ def eliminator(mat, i_val, ml):
     return mat
 
 
-def back_sub(mat, ml, solutions):  # Back substitution
+def u_solve(mat, ml, solutions):  # Back substitution
     for i_val in range(ml):
         addition = 0
         for j_val in range(i_val):
@@ -45,29 +45,33 @@ def gauss_elm(mat, y0):  # Combining all functions
         i_val += 1
 
     solutions = np.zeros(ml)
-    solutions = back_sub(mat, ml, solutions)
+    solutions = u_solve(mat, ml, solutions)
 
     print("Solutions: ")
     for i_val in range(ml):
         print(f"X{i_val + 1} = {round(solutions[i_val], 10)}")
 
 
-try:
-    mat_len = int(input("Number of unknowns (Hit enter to take provided matrix): "))
-    matrix = np.empty((mat_len, mat_len))
-    y = np.empty((mat_len, 1))
-    for i in range(mat_len):
-        for j in range(mat_len):
-            matrix[i, j] = float(input(f"A{i + 1}{j + 1}: "))
-    for i in range(mat_len):
-        for j in range(1):
-            y[i, j] = float(input(f"Y{i + 1}: "))
-except ValueError:
-    matrix = np.array([[3, -2, 1],
-                       [-4, -1, 4],
-                       [1, -1, 3.0]])
-    y = np.array([[15],
-                  [8],
-                  [13]])
+def mat_in():
+    try:
+        mat_len = int(input("Number of unknowns (Hit enter to take provided matrix): "))
+        mat = np.empty((mat_len, mat_len))
+        y_0 = np.empty((mat_len, 1))
+        for i in range(mat_len):
+            for j in range(mat_len):
+                mat[i, j] = float(input(f"A{i + 1}{j + 1}: "))
+        for i in range(mat_len):
+            for j in range(1):
+                y_0[i, j] = float(input(f"Y{i + 1}: "))
+    except ValueError:
+        mat = np.array([[3, -2, 1],
+                        [-4, -1, 4],
+                        [1, -1, 3.0]])
+        y_0 = np.array([[15],
+                        [8],
+                        [13]])
+    return mat, y_0
 
+
+matrix, y = mat_in()
 gauss_elm(matrix, y)
