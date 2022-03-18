@@ -3,45 +3,45 @@ import random
 import numpy as np
 
 
-def pivote_pi(matrix, i, mat_len):
+def pivote_pi(mat, i_val, ml):
     global pi, swap
-    pi = np.identity(mat_len)  # Initializing Pi
-    for j in range(mat_len - i):
-        if abs(matrix[j + i, i]) == max(abs(matrix[i:, i])):  # Finding row containing the largest element
-            matrix[[i, j + i]] = matrix[[j + i, i]]  # Pivoting
-            if j + i != i:  # To count number of swaps
+    pi = np.identity(ml)  # Initializing Pi
+    for j_val in range(ml - i_val):
+        if abs(mat[j_val + i_val, i_val]) == max(abs(mat[i_val:, i_val])):  # Finding row containing the largest element
+            mat[[i_val, j_val + i_val]] = mat[[j_val + i_val, i_val]]  # Pivoting
+            if j_val + i_val != i_val:  # To count number of swaps
                 swap = 1
             else:
                 swap = 0
-            pi[[i, j + i]] = pi[[j + i, i]]
+            pi[[i_val, j_val + i_val]] = pi[[j_val + i_val, i_val]]
             break
-    return matrix, pi, swap
+    return mat, pi, swap
 
 
-def eliminate_li(matrix, i, mat_len):
+def eliminate_li(mat, i_val, ml):
     global li
-    li = np.identity(mat_len)  # Initializing Pi
-    for j in range(mat_len - i - 1):
-        fact = (matrix[i + j + 1, i]) / matrix[i, i]
-        matrix[i + j + 1] -= (matrix[i] * fact)  # Elimination
-        li[i + j + 1, i] = fact  # Generating Li
-    return matrix, li
+    li = np.identity(ml)  # Initializing Pi
+    for j_val in range(ml - i_val - 1):
+        fact = (mat[i_val + j_val + 1, i_val]) / mat[i_val, i_val]
+        mat[i_val + j_val + 1] -= (mat[i_val] * fact)  # Elimination
+        li[i_val + j_val + 1, i_val] = fact  # Generating Li
+    return mat, li
 
 
-def lu_det(matrix):
+def lu_det(mat):
     print("\nMatrix: ")
-    print(matrix)
-    mat_len = len(matrix)
-    ptot = np.identity(mat_len)
-    ltot = np.identity(mat_len)
+    print(mat)
+    ml = len(mat)
+    ptot = np.identity(ml)
+    ltot = np.identity(ml)
     count = 0
-    for i in range(mat_len):
-        pivote_pi(matrix, i, mat_len)
+    for i_val in range(ml):
+        pivote_pi(mat, i_val, ml)
         count += swap
         ptot = np.matmul(ptot, pi)
-        eliminate_li(matrix, i, mat_len)
+        eliminate_li(mat, i_val, ml)
         ltot = np.matmul(pi, np.matmul(ltot, np.matmul(pi, li)))
-    p, u = ptot, matrix
+    p, u = ptot, mat
     det_p = np.power(-1, count)
     det_u = np.prod(np.diag(u))  # l not required as its diagonal contains 1s and hence its det = 1
     print(f"\nDeterminant: {round(det_u * det_p, 10)}")
