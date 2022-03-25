@@ -30,5 +30,6 @@ def sim_int(f_x, x_vals):
 
 x = np.array([0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0])
 fx = np.array([1.0, 1.65, 2.723, 4.48, 7.39, 12.18, 20.09, 33.12, 54.60])
+
 print(f"Simpsons Integral: {sim_int(fx, x)}")
 print(f"Trapezoidal Integral: {trap_int(fx, x)}")
