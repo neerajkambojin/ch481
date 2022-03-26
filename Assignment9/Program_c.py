@@ -32,7 +32,7 @@ def sim_int(f_x, h_val):
 
 
 def h_val(a_val, b_val):
-    n_val = b_val - a_val + 1  # Initializing n value for h = 1
+    n_val = b_val - a_val + 1  # Initializing n value (11) for h = 1
     while True:
         h_val = (b_val - a_val) / (n_val - 1)  # Calculating h value according to number of terms (n)
         f_x = np.empty(0)  # Initializing fuction values list
@@ -55,7 +55,8 @@ def h_val(a_val, b_val):
             print(f"Difference: {round(((s_int - t_int) / s_int) * 100, 5)}% of Simpsons method Integral.")
             return h_val
         else:
-            n_val += 1  # This increment can be changed to 10, 50, 100 or any bigger values to make the code faster.
+            n_val += 2  # This increment can be changed to 20, 50, 100 or any bigger values to make the code faster.
+            # (Added 2 because n_val must be odd)
 
 
 a, b = 0, 10  # a and b values
