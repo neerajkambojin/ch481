@@ -32,15 +32,19 @@ def sim_int(f_x, h_val):
 
 
 def h_val(a_val, b_val):
-    n_val = b_val - a_val + 1
+    n_val = b_val - a_val + 1  # Initializing n value for h = 1
     while True:
-        h_val = (b_val - a_val) / (n_val - 1)
-        f_x = np.empty(0)
+        h_val = (b_val - a_val) / (n_val - 1)  # Calculating h value according to number of terms (n)
+        f_x = np.empty(0)  # Initializing fuction values list
         x = a_val
+
+        # Generating array of function values
         for i in range(n_val):
             val = np.exp(-x) * np.sin(20 * x)
             f_x = np.append(f_x, val)
             x += h_val
+
+        # Condition of 1%
         if 0.99 * sim_int(f_x, h_val) < trap_int(f_x, h_val) < 1.01 * sim_int(f_x, h_val):
             s_int = (sim_int(f_x, h_val))
             t_int = (trap_int(f_x, h_val))
@@ -54,6 +58,6 @@ def h_val(a_val, b_val):
             n_val += 1  # This increment can be changed to 10, 50, 100 or any bigger values to make the code faster.
 
 
-a, b = 0, 10
+a, b = 0, 10  # a and b values
 
 h_val(a, b)
