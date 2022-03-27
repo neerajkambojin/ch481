@@ -35,14 +35,14 @@ fx = np.array([1.0, 1.65, 2.723, 4.48, 7.39, 12.18, 20.09, 33.12, 54.60])
 
 
 while True:
-    method = input("Which method ('S' for Simpson's Method, 'T' for Trapezoidal Method and 'BOTH' for both): ")
+    method = input("\nWhich method ('S' for Simpson's Method, 'T' for Trapezoidal Method and 'BOTH' or 'st' for both): ")
     if method.upper() == "T":
         print(f"\nTrapezoidal method Integral: {round(trap_int(fx, x), 10)} ")
         break
     if method.upper() == "S":
         print(f"\nSimpsons method Integral: {round(sim_int(fx, x), 10)}")
         break
-    if method.upper() == "BOTH":
+    if method.upper() == "BOTH" or 'st':
         print(f"\nSimpsons method Integral: {round(sim_int(fx, x), 10)}")
         print(f"Trapezoidal method Integral: {round(trap_int(fx, x), 10)} \n")
         break

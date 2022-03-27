@@ -1,59 +1,64 @@
-# Program c alternative
-
 import numpy as np
 
 
-# Function for Trapezoidal Integral
-def trap_int(f_x, h_val):
+# Trapezoidal integral function
+def trap_int(ff, hh):
     integral = 0
-    n = len(f_x)
+    n = len(ff)
     for i in range(n):
         if i == 0 or i == n - 1:
-            integral += f_x[i]
+            integral += ff[i]
         else:
-            integral += 2 * f_x[i]
-    return integral * (h_val / 2)
+            integral += 2 * ff[i]
+    return (hh / 2) * integral
 
 
-# Function for Simpsons Integral
-def sim_int(f_x, h_val):
-    n = len(f_x)
+# Simpsons integral method
+def simpsons(ff, hh):
+    n = len(ff)
     integral = 0
     for i in range(n):
         if i == 0 or i == n - 1:
-            integral += f_x[i]
-        elif i % 2 != 0:
-            integral += 4 * f_x[i]
+            integral += ff[i]
+        elif i % 2 == 0:
+            integral += 2 * ff[i]
         else:
-            integral += 2 * f_x[i]
+            integral += 4 * ff[i]
+    return (hh / 3) * integral
 
-    return integral * (h_val / 3)
+
+# Function for finding h
+def det_h(a, b):
+    n = b - a + 1
+    hh = (b - a) / (n - 1)
+    ff = np.empty(n)
+    x = a
+
+    # Making array
+    for i in range(n):
+        fx = np.exp(-x) * np.sin(20 * x)
+        ff[i] = fx
+        x += hh
+    # Condition
+    while trap_int(ff, hh) < 0.99 * simpsons(ff, hh) or trap_int(ff, hh) > 1.01 * simpsons(ff, hh):
+        n += 2  # So that number of terms remail odd
+        hh = (b - a) / (n - 1)
+        ff = np.empty(n)
+        x = a
+        for i in range(n):
+            fx = np.exp(-x) * np.sin(20 * x)
+            ff[i] = fx
+            x += hh
+
+    # Results
+    print()
+    print(f"Trapezoidal integral: {trap_int(ff, hh)}")
+    print(f"Simpsons integral: {simpsons(ff, hh)}")
+    print(f"h: {hh}")
+    print(f"Margin: {((simpsons(ff, hh) - trap_int(ff, hh)) / simpsons(ff, hh)) * 100}%")
+    return hh
 
 
 a = 0
 b = 10
-
-
-def h_val(a_val, b_val):
-    n_val = b_val - a_val + 1
-    h_val = (b_val - a_val) / (n_val - 1)
-    f_x = np.empty(0)
-    x = a_val
-    for i in range(n_val):
-        val = np.exp(-x) * np.sin(20 * x)
-        f_x = np.append(f_x, val)
-        x += h_val
-    while trap_int(f_x, h_val) < 0.99 * sim_int(f_x, h_val) or trap_int(f_x, h_val) > 1.01 * sim_int(f_x, h_val):
-        n_val += 1
-        h_val = (b_val - a_val) / (n_val - 1)
-        f_x = np.empty(0)
-        x = a_val
-        for i in range(n_val):
-            val = np.exp(-x) * np.sin(20 * x)
-            f_x = np.append(f_x, val)
-            x += h_val
-    print(trap_int(f_x, h_val))
-    print(sim_int(f_x, h_val))
-
-
-h_val(a, b)
+det_h(a, b)
