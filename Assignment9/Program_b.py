@@ -27,7 +27,6 @@ def sim_int(f_x, x_vals):
             integral += 4 * f_x[i]
         else:
             integral += 2 * f_x[i]
-
     return integral * (h / 3)
 
 

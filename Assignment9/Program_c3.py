@@ -54,7 +54,6 @@ def h_val(a_val, b_val):
             return h_val
         else:
             h_val = h_val/2  # This increment can be changed to 20, 50, 100 or any bigger values to make the code faster
-            print(h_val)
 
 
 a, b = 0, 10  # a and b values
