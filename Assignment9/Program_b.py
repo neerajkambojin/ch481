@@ -33,9 +33,23 @@ def sim_int(f_x, x_vals):
 x = np.array([0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0])
 fx = np.array([1.0, 1.65, 2.723, 4.48, 7.39, 12.18, 20.09, 33.12, 54.60])
 
-# Printing Results
-print(f"\nSimpsons method Integral: {round(sim_int(fx, x), 10)}")
-print(f"Trapezoidal method Integral: {round(trap_int(fx, x), 10)} \n")
+
+while True:
+    try:
+        method = input("Which method ('S' for Simpson's Method, 'T' for Trapezoidal Method and 'BOTH' for both): ")
+    except ValueError:
+        continue
+    if method.upper() == "T":
+        print(f"\nTrapezoidal method Integral: {round(trap_int(fx, x), 10)} ")
+        break
+    if method.upper() == "S":
+        print(f"\nSimpsons method Integral: {round(sim_int(fx, x), 10)}")
+        break
+    if method.upper() == "BOTH":
+        print(f"\nSimpsons method Integral: {round(sim_int(fx, x), 10)}")
+        print(f"Trapezoidal method Integral: {round(trap_int(fx, x), 10)} \n")
+        break
+
 
 # Scipy results for verification (Commented out, in case scipy module is not installed)
 
