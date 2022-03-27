@@ -35,10 +35,7 @@ fx = np.array([1.0, 1.65, 2.723, 4.48, 7.39, 12.18, 20.09, 33.12, 54.60])
 
 
 while True:
-    try:
-        method = input("Which method ('S' for Simpson's Method, 'T' for Trapezoidal Method and 'BOTH' for both): ")
-    except ValueError:
-        continue
+    method = input("Which method ('S' for Simpson's Method, 'T' for Trapezoidal Method and 'BOTH' for both): ")
     if method.upper() == "T":
         print(f"\nTrapezoidal method Integral: {round(trap_int(fx, x), 10)} ")
         break
