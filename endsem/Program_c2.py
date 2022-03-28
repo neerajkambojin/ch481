@@ -1,5 +1,5 @@
 import numpy as np
-from tabulate import tabulate
+from tabulate import tabulate   # pip install tabulate
 
 g_space = np.empty((5, 5), object)
 g_space[0, 2] = "P(A)"
