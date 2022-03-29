@@ -1,5 +1,15 @@
 import numpy as np
+import time
 from tabulate import tabulate   # pip install tabulate
+
+
+def formatter(string):
+    digits = "1234567890"
+    for x in string:
+        if x not in digits:
+            string = string.replace(x, "")
+    return string
+
 
 g_space = np.empty((5, 5), object)
 g_space[0, 2] = "P(A)"
@@ -9,10 +19,10 @@ g_space[1, 4] = "E(A)"
 g_space[3, 0] = "E(B)"
 g_space[3, 3] = "E(B)"
 
-for i in range(5):
-    for j in range(5):
-        if g_space[i, j] is None:
-            g_space[i, j] = "--"
+for j in range(5):
+    for k in range(5):
+        if g_space[j, k] is None:
+            g_space[j, k] = "--"
 
 
 a_positions = np.array([11, 14])
@@ -20,7 +30,7 @@ b_positions = np.array([30, 33])
 p_positions = np.array([2, 42])
 
 players = ["A", "B"]
-print(f"\nTable: \n{tabulate(g_space, tablefmt='grid')}\n")
+print(f"\nTable: \n{tabulate(g_space, tablefmt = 'fancy_grid')}\n")
 while True:
     player = players[0]
     if player == "A":
@@ -34,10 +44,10 @@ while True:
 
     e_positions = np.append(a_positions, b_positions)
     occ_positions = np.append(e_positions, p_positions)
-    st_str = input(f"Player {player} starting coordinates (e.g. 11, 14 etc): ")
+    st_str = formatter(input(f"Player {player} starting coordinates (Valid input format e.g. 14, (1,4), 1 4, '1, 4'): "))
     st_int = int(st_str)
     while st_int not in o_positions:
-        st_str = input("Select valid coordinates: ")
+        st_str = formatter(input("Select valid coordinates: "))
         st_int = int(st_str)
 
     rest_es = list(e_positions)
@@ -49,45 +59,50 @@ while True:
         restricted_positions = np.append(restricted_positions, np.linspace(i - 10, i + 10, 3))
     restricted_positions = np.append(restricted_positions, occ_positions)
 
-    valid_moves = np.linspace(st_int - 2, st_int + 2, 5)
-    valid_moves = np.append(valid_moves, np.linspace(st_int - 20, st_int + 20, 5))
-    risk_moves = np.linspace(st_int - 2, st_int + 2, 3)
-    risk_moves = np.append(risk_moves, np.linspace(st_int - 20, st_int + 20, 3))
-    fp = input("Move to: ")
+    valid_moves = np.append(np.linspace(st_int - 2, st_int + 2, 5), np.linspace(st_int - 20, st_int + 20, 5))
+    risk_moves = np.append(np.linspace(st_int - 2, st_int + 2, 3), np.linspace(st_int - 20, st_int + 20, 3))
+    fp_str = formatter(input("Move to: "))
+    fp_int = int(fp_str)
     while True:
-        if int(fp) in valid_moves and int(fp) not in restricted_positions and len(fp) == 2:
-            if int(fp[0]) > 4 or int(fp[0]) < 0 or int(fp[1]) > 4 or int(fp[1]) < 0:
+        if fp_int in valid_moves and fp_int not in restricted_positions and len(fp_str) == 2:
+            if int(fp_str[0]) > 4 or int(fp_str[0]) < 0 or int(fp_str[1]) > 4 or int(fp_str[1]) < 0:
                 print("Illegal move!!!")
-                fp = int(input("Move to: "))
+                fp_str = formatter(input("Move to: "))
+                fp_int = int(fp_str)
             else:
                 break
         else:
             print("Illegal move!!!")
-            fp = input("Move to: ")
+            fp_str = formatter(input("Move to: "))
+            fp_int = int(fp_str)
     prob = np.random.random(1)
-    if (int(fp) in risk_moves) and prob >= 0.5:
-        print("\nMove rejected!")
-        print(f"\nTable: \n{tabulate(g_space, tablefmt='grid')}\n")
+    if (fp_int in risk_moves) and prob >= 0.5:
+        print("\nTossing the coin!")
+        time.sleep(1)
+        print("Bad luck, move rejected :(")
+        print(f"\nTable: \n{tabulate(g_space, tablefmt='fancy_grid')}\n")
     else:
-        if (prob < 0.5) and (int(fp) in risk_moves):
-            print("\nMove accepted!")
+        if (prob < 0.5) and (fp_int in risk_moves):
+            print("\nTossing the coin!")
+            time.sleep(1)
+            print("Yay, move accepted :)")
         if st_int == o_positions[0]:
-            o_positions[0] = fp
+            o_positions[0] = fp_str
         else:
-            o_positions[1] = fp
-        i_index = tuple(str(st_str))
-        f_index = tuple(str(fp))
+            o_positions[1] = fp_str
+        i_index = tuple(st_str)
+        f_index = tuple(fp_str)
         i_index = list(map(int, i_index))
         f_index = list(map(int, f_index))
         g_space[i_index[0], i_index[1]] = "--"
         g_space[f_index[0], f_index[1]] = electron
-        print(f"\nTable: \n{tabulate(g_space, tablefmt='grid')}\n")
+        print(f"\nTable: \n{tabulate(g_space, tablefmt='fancy_grid')}\n")
     if player == "A":
         a_positions = np.copy(o_positions)
     else:
         b_positions = np.copy(o_positions)
     players.append(player)
     players.pop(0)
-    if int(fp) in win_positions:
+    if fp_int in win_positions:
         print(f"Player {player} wins!!!")
         break
