@@ -106,3 +106,14 @@ while True:
     if fp_int in win_positions:
         print(f"Player {player} wins!!!")
         break
+
+
+# Bugs
+
+'''
+1. If no digit in input, ValueError will come.
+Sol: Use Try Except
+
+2.
+
+'''
