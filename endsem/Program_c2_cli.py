@@ -113,7 +113,7 @@ while True:
 '''
 1. If no digit in input, ValueError will come.
 Sol: Use Try Except
-Conclusion: Solved in Program_c2_rough.py but yet to merge
+Conclusion: Solved in Program_c2_3.py but yet to merge
 2.
 
 '''

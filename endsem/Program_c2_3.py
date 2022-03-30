@@ -24,7 +24,6 @@ for j in range(5):
         if g_space[j, k] is None:
             g_space[j, k] = "--"
 
-
 a_positions = np.array([11, 14])
 b_positions = np.array([30, 33])
 p_positions = np.array([2, 42])
@@ -44,43 +43,51 @@ while True:
 
     e_positions = np.append(a_positions, b_positions)
     occ_positions = np.append(e_positions, p_positions)
+
     while True:
         try:
-            st_str = formatter(input(f"Player {player} starting coordinates (Valid input format e.g. 14, (1,4), 1 4, '1, 4'): "))
+            st_str = formatter(input(
+                f"Player {player} starting coordinates (Valid input format e.g. 14, (1,4), 1 4, '1, 4'): "))
             st_int = int(st_str)
             break
-        except:
+        except ValueError:
             print("Enter valid coordinates!!!")
             pass
+
     while st_int not in o_positions:
         print("Enter valid coordinates!!!")
         while True:
             try:
-                st_str = formatter(
-                    input(f"Player {player} starting coordinates (Valid input format e.g. 14, (1,4), 1 4, '1, 4'): "))
+                st_str = formatter(input(
+                    f"Player {player} starting coordinates (Valid input format e.g. 14, (1,4), 1 4, '1, 4'): "))
                 st_int = int(st_str)
                 break
-            except:
+            except ValueError:
                 print("Enter valid coordinates!!!")
+
     rest_es = list(e_positions)
     rest_es.remove(st_int)
     rest_es = np.array(rest_es)
     restricted_positions = np.empty(0)
+
     for i in rest_es:
         restricted_positions = np.append(restricted_positions, np.linspace(i - 1, i + 1, 3))
         restricted_positions = np.append(restricted_positions, np.linspace(i - 10, i + 10, 3))
+
     restricted_positions = np.append(restricted_positions, occ_positions)
 
     valid_moves = np.append(np.linspace(st_int - 2, st_int + 2, 5), np.linspace(st_int - 20, st_int + 20, 5))
     risk_moves = np.append(np.linspace(st_int - 2, st_int + 2, 3), np.linspace(st_int - 20, st_int + 20, 3))
+
     while True:
         try:
             fp_str = formatter(input("Move to: "))
             fp_int = int(fp_str)
             break
-        except:
+        except ValueError:
             print("Illegal Move!!!")
             pass
+
     while True:
         if fp_int in valid_moves and fp_int not in restricted_positions and len(fp_str) == 2:
             if int(fp_str[0]) > 4 or int(fp_str[0]) < 0 or int(fp_str[1]) > 4 or int(fp_str[1]) < 0:
@@ -90,7 +97,7 @@ while True:
                         fp_str = formatter(input("Move to: "))
                         fp_int = int(fp_str)
                         break
-                    except:
+                    except ValueError:
                         print("Illegal Move!!!")
                         pass
             else:
@@ -102,9 +109,10 @@ while True:
                     fp_str = formatter(input("Move to: "))
                     fp_int = int(fp_str)
                     break
-                except:
+                except ValueError:
                     print("Illegal Move!!!")
                     pass
+
     prob = np.random.random(1)
     if (fp_int in risk_moves) and prob >= 0.5:
         print("\nTossing the coin!")
@@ -127,12 +135,15 @@ while True:
         g_space[i_index[0], i_index[1]] = "--"
         g_space[f_index[0], f_index[1]] = electron
         print(f"\nTable: \n{tabulate(g_space, tablefmt='fancy_grid')}\n")
+
     if player == "A":
         a_positions = np.copy(o_positions)
     else:
         b_positions = np.copy(o_positions)
+
     players.append(player)
     players.pop(0)
+
     if fp_int in win_positions:
         print(f"Player {player} wins!!!")
         break
