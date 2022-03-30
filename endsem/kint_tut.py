@@ -1,6 +1,7 @@
 from tkinter import *
 
 root = Tk()
+root.title("Protocap")
 
 name = Label(root, text="Neeraj Kamboj")
 name2 = Label(root, text="Mangala")

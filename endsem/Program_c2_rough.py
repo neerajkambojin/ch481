@@ -1,6 +1,5 @@
 import numpy as np
 import time
-from tkinter import *
 from tabulate import tabulate   # pip install tabulate
 
 
@@ -30,20 +29,8 @@ a_positions = np.array([11, 14])
 b_positions = np.array([30, 33])
 p_positions = np.array([2, 42])
 
-root = Tk()
-root.title("Protoap")
-root.geometry('1020x680')
-
-
-def pri():
-    g_table = Label(root, text=f"\nTable: \n{g_space}\n")
-    g_table.pack()
-
-
-table_button = Button(root, text="Start Game!", command=pri).pack()
-
-root.mainloop()
 players = ["A", "B"]
+print(f"\nTable: \n{tabulate(g_space, tablefmt = 'fancy_grid')}\n")
 while True:
     player = players[0]
     if player == "A":
@@ -57,12 +44,24 @@ while True:
 
     e_positions = np.append(a_positions, b_positions)
     occ_positions = np.append(e_positions, p_positions)
-    st_str = formatter(input(f"Player {player} starting coordinates (Valid input format e.g. 14, (1,4), 1 4, '1, 4'): "))
-    st_int = int(st_str)
+    while True:
+        try:
+            st_str = formatter(input(f"Player {player} starting coordinates (Valid input format e.g. 14, (1,4), 1 4, '1, 4'): "))
+            st_int = int(st_str)
+            break
+        except:
+            print("Enter valid coordinates!!!")
+            pass
     while st_int not in o_positions:
-        st_str = formatter(input("Select valid coordinates: "))
-        st_int = int(st_str)
-
+        print("Enter valid coordinates!!!")
+        while True:
+            try:
+                st_str = formatter(
+                    input(f"Player {player} starting coordinates (Valid input format e.g. 14, (1,4), 1 4, '1, 4'): "))
+                st_int = int(st_str)
+                break
+            except:
+                print("Enter valid coordinates!!!")
     rest_es = list(e_positions)
     rest_es.remove(st_int)
     rest_es = np.array(rest_es)
@@ -74,20 +73,38 @@ while True:
 
     valid_moves = np.append(np.linspace(st_int - 2, st_int + 2, 5), np.linspace(st_int - 20, st_int + 20, 5))
     risk_moves = np.append(np.linspace(st_int - 2, st_int + 2, 3), np.linspace(st_int - 20, st_int + 20, 3))
-    fp_str = formatter(input("Move to: "))
-    fp_int = int(fp_str)
+    while True:
+        try:
+            fp_str = formatter(input("Move to: "))
+            fp_int = int(fp_str)
+            break
+        except:
+            print("Illegal Move!!!")
+            pass
     while True:
         if fp_int in valid_moves and fp_int not in restricted_positions and len(fp_str) == 2:
             if int(fp_str[0]) > 4 or int(fp_str[0]) < 0 or int(fp_str[1]) > 4 or int(fp_str[1]) < 0:
                 print("Illegal move!!!")
-                fp_str = formatter(input("Move to: "))
-                fp_int = int(fp_str)
+                while True:
+                    try:
+                        fp_str = formatter(input("Move to: "))
+                        fp_int = int(fp_str)
+                        break
+                    except:
+                        print("Illegal Move!!!")
+                        pass
             else:
                 break
         else:
             print("Illegal move!!!")
-            fp_str = formatter(input("Move to: "))
-            fp_int = int(fp_str)
+            while True:
+                try:
+                    fp_str = formatter(input("Move to: "))
+                    fp_int = int(fp_str)
+                    break
+                except:
+                    print("Illegal Move!!!")
+                    pass
     prob = np.random.random(1)
     if (fp_int in risk_moves) and prob >= 0.5:
         print("\nTossing the coin!")
@@ -119,5 +136,3 @@ while True:
     if fp_int in win_positions:
         print(f"Player {player} wins!!!")
         break
-
-root.mainloop()
