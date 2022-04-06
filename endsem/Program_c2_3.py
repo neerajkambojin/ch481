@@ -12,17 +12,17 @@ def formatter(string):
 
 
 g_space = np.empty((5, 5), object)
-g_space[0, 2] = "P(A)"
-g_space[4, 2] = "P(B)"
-g_space[1, 1] = "E(A)"
-g_space[1, 4] = "E(A)"
-g_space[3, 0] = "E(B)"
-g_space[3, 3] = "E(B)"
+g_space[0, 2] = "-P(A)-\n(0, 2)"
+g_space[4, 2] = "-P(B)-\n(4, 2)"
+g_space[1, 1] = "-E(A)-\n(1, 1)"
+g_space[1, 4] = "-E(A)-\n(1, 4)"
+g_space[3, 0] = "-E(B)-\n(3, 0)"
+g_space[3, 3] = "-E(B)-\n(3, 3)"
 
 for j in range(5):
     for k in range(5):
         if g_space[j, k] is None:
-            g_space[j, k] = "--"
+            g_space[j, k] = f"------\n{j, k}"
 
 a_positions = np.array([11, 14])
 b_positions = np.array([30, 33])
@@ -132,9 +132,12 @@ while True:
         f_index = tuple(fp_str)
         i_index = list(map(int, i_index))
         f_index = list(map(int, f_index))
-        g_space[i_index[0], i_index[1]] = "--"
-        g_space[f_index[0], f_index[1]] = electron
+        g_space[i_index[0], i_index[1]] = f"  ------\n{i_index[0], i_index[1]}"
+        g_space[f_index[0], f_index[1]] = f"-{electron}-\n{f_index[0], f_index[1]}"
         print(f"\nTable: \n{tabulate(g_space, tablefmt='fancy_grid')}\n")
+        if fp_int in win_positions:
+            print(f"Player {player} wins!!!")
+            break
 
     if player == "A":
         a_positions = np.copy(o_positions)
@@ -143,7 +146,3 @@ while True:
 
     players.append(player)
     players.pop(0)
-
-    if fp_int in win_positions:
-        print(f"Player {player} wins!!!")
-        break
