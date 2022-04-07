@@ -1,6 +1,13 @@
 import numpy as np
 import time
-from tabulate import tabulate   # pip install tabulate
+from tabulate import tabulate  # pip install tabulate ( For formatting table)
+
+from colorama import init, Fore, Back, Style  # pip install colorama ( For color highlighting)
+
+init()
+FORES = [Fore.BLACK, Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN, Fore.WHITE]
+BACKS = [Back.BLACK, Back.RED, Back.GREEN, Back.YELLOW, Back.BLUE, Back.MAGENTA, Back.CYAN, Back.WHITE]
+BRIGHTNESS = [Style.DIM, Style.NORMAL, Style.BRIGHT]
 
 
 def formatter(string):
@@ -12,37 +19,39 @@ def formatter(string):
 
 
 g_space = np.empty((5, 5), object)
-g_space[0, 2] = "-P(A)-\n(0, 2)"
-g_space[4, 2] = "-P(B)-\n(4, 2)"
-g_space[1, 1] = "-E(A)-\n(1, 1)"
-g_space[1, 4] = "-E(A)-\n(1, 4)"
-g_space[3, 0] = "-E(B)-\n(3, 0)"
-g_space[3, 3] = "-E(B)-\n(3, 3)"
+g_space[0, 2] = f"{Style.BRIGHT}{Fore.RED}-P(A)(0, 2)-{Style.RESET_ALL}"
+g_space[4, 2] = f"{Style.BRIGHT}{Fore.RED}-P(B)(4, 2)-{Style.RESET_ALL}"
+g_space[1, 1] = f"{Style.BRIGHT}{Fore.GREEN}-E(A)(1, 1)-{Style.RESET_ALL}"
+g_space[1, 4] = f"{Style.BRIGHT}{Fore.GREEN}-E(A)(1, 4)-{Style.RESET_ALL}"
+g_space[3, 0] = f"{Style.BRIGHT}{Fore.RED}-E(B)(3, 0)-{Style.RESET_ALL}"
+g_space[3, 3] = f"{Style.BRIGHT}{Fore.RED}-E(B)(3, 3)-{Style.RESET_ALL}"
 
 for j in range(5):
     for k in range(5):
         if g_space[j, k] is None:
-            g_space[j, k] = f"------\n{j, k}"
+            g_space[j, k] = f"{Style.DIM}{Fore.LIGHTBLUE_EX}-{j, k}-{Style.RESET_ALL}"
 
 a_positions = np.array([11, 14])
 b_positions = np.array([30, 33])
 p_positions = np.array([2, 42])
 
 players = ["A", "B"]
-print(f"\nTable: \n{tabulate(g_space, tablefmt = 'fancy_grid')}\n")
+
 while True:
     player = players[0]
     if player == "A":
         o_positions = a_positions.copy()
         win_positions = np.array([41, 43, 32])
-        electron = "E(A)"
+        electron = f"E(A)"
     else:
         o_positions = b_positions.copy()
         win_positions = np.array([1, 3, 12])
-        electron = "E(B)"
+        electron = f"E(B)"
 
     e_positions = np.append(a_positions, b_positions)
     occ_positions = np.append(e_positions, p_positions)
+
+    print(f"\nTable: \n{tabulate(g_space, tablefmt='fancy_grid')}\n")
 
     while True:
         try:
@@ -132,8 +141,9 @@ while True:
         f_index = tuple(fp_str)
         i_index = list(map(int, i_index))
         f_index = list(map(int, f_index))
-        g_space[i_index[0], i_index[1]] = f"  ------\n{i_index[0], i_index[1]}"
-        g_space[f_index[0], f_index[1]] = f"-{electron}-\n{f_index[0], f_index[1]}"
+        g_space[i_index[0], i_index[1]] = f"{Style.DIM}{Fore.LIGHTBLUE_EX}-{i_index[0], i_index[1]}-{Style.RESET_ALL}"
+        g_space[f_index[0], f_index[1]] = f"{Style.BRIGHT}{Fore.RED}-{electron}{f_index[0], f_index[1]}-{Style.RESET_ALL}"
+
         print(f"\nTable: \n{tabulate(g_space, tablefmt='fancy_grid')}\n")
         if fp_int in win_positions:
             print(f"Player {player} wins!!!")
