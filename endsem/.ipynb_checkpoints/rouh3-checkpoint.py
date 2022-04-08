@@ -15,7 +15,7 @@ def fmt(string):
 
 
 def indexes(ind):
-    ind = list(int(x) for x in str(int(ind)))
+    ind = list(int(x) for x in str(ind))
     if len(ind) == 1:
         i1 = 0
         i2 = ind[0]
@@ -83,12 +83,7 @@ while True:
     restricted_positions = np.append(restricted_positions, occ_positions)
     valid_moves = np.append(np.linspace(st_int - 2, st_int + 2, 5), np.linspace(st_int - 20, st_int + 20, 5))
     risk_moves = np.append(np.linspace(st_int - 2, st_int + 2, 3), np.linspace(st_int - 20, st_int + 20, 3))
-    for pos in risk_moves:
-        pos = int(pos)
-        if pos >= 0 and (pos not in restricted_positions) and (pos in tables_values):
-            i1, i2 = indexes(pos)
-            g_space[i1, i2] = f"{Fore.LIGHTBLUE_EX}-({i1}, {i2})-{Style.RESET_ALL}"
-    print(tabulate(g_space, tablefmt='fancy_grid'))
+
     fp_int = 55
     while True:
         try:
