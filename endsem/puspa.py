@@ -1,3 +1,4 @@
+from cProfile import label
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -12,14 +13,18 @@ def y_value(o_vals, x_0, x):
 
 
 def animate(i):
+    plt.xlabel('X axis')
+    plt.ylabel('Y axis')
     x.append(x_vals[i])
     y.append(y_vals[i])
 
     ax.clear()
-    ax.plot(x, y)
-    ax.set_xlim([90, 310])
-    ax.set_ylim([0, 1.1])
-    ax.plot(xi, yi, 'o:', alpha=0.55)
+    ax.plot(x, y, label='Spline')
+    
+    ax.set_xlim([98, 302])
+    ax.set_ylim([0.12, 1.04])
+    ax.plot(xi, yi, 'o:', alpha=0.55, label='From data')
+    plt.legend(loc = 'upper left')
 
 
 with open('spline_dataset.dat') as file:
@@ -34,8 +39,8 @@ with open('spline_dataset.dat') as file:
 
 xi = np.array(xi)
 yi = np.array(yi)
-xi = [1,2,3,4]
-yi = [5,6,7,8]
+# xi = [1,2,3,4]
+# yi = [5,6,7,8]
 n = (len(yi) - 1)
 h = (xi[1] - xi[0])
 
@@ -117,7 +122,8 @@ x = []
 y = []
 fig, ax = plt.subplots()
 
-print(x_arr)
-exit()
+# print(x_arr)
+# exit()
 ani = FuncAnimation(fig, animate, frames=200, interval=1, repeat=False)
+
 plt.show()
