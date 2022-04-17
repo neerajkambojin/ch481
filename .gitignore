@@ -1,5 +1,5 @@
 .idea
 *.tmp
 __pycache__
-Extras
-LiveClass
+extras
+liveClass
