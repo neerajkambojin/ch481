@@ -1,10 +1,4 @@
-# number = int(input("Number: "))
-# while True:
-#     print(number % 10)
-#     number = number // 10
-#     if number//10 == 0:
-#         print(number)
-#         break
+
 
 sum = 0
 number = input("Number: ")
