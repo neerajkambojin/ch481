@@ -190,6 +190,7 @@ while True:
             if (10 * j) + k not in occ_positions:
                 g_space[j, k] = f"{Style.DIM}{Fore.YELLOW}-{j, k}-{Style.RESET_ALL}"
     print(f"\nTable: \n{tabulate(g_space, tablefmt='fancy_grid')}\n")
+
     # changing player
     players.append(player)
     players.pop(0)
