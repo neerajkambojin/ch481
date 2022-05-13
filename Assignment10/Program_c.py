@@ -45,4 +45,11 @@ x_s = np.array([1, 2, 3, 4, 5, 6, 7])
 fx = np.array([1, 8, 27, 64, 125, 216, 343])
 x = float(input("Find differential at(x): "))
 
-print("The differential value is:", differentiate(x_s, fx, x))
+for i in range(len(x_s)):
+    if x_s[i] == x:
+        soln = fx[i]
+        break
+else:
+    soln = differentiate(x_s, fx, x)
+
+print("The differential value is:", soln)
