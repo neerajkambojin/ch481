@@ -30,7 +30,7 @@ b_positions = np.array([30, 33])
 p_positions = np.array([2, 42])
 
 root = Tk()
-root.title("Protoap")
+root.title("Protocap")
 root.geometry('1020x680')
 
 
