@@ -1,25 +1,7 @@
 # Heights
-
-import math  # Importing math module
+from Assignment2.Program_b import mean_n_std
 
 with open('heights.txt') as heights:  # Opening student_heights.txt file in read mode
-    heights_list = [float(height[-4:-1]) for height in heights]  # Making list of heights
+    heights_list = [float(height.split(":")[-1]) for height in heights]  # Making list of heights
 
-sum_of_heights = 0
-count_of_heights = len(heights_list)  # Counting number of students
-
-for height in heights_list:  # Sum of heights
-    sum_of_heights += height
-
-average_height = sum_of_heights / count_of_heights  # Calculating average height
-print(f'The average height is {average_height} ft.')  # Printing average height
-
-# Calculation of standard deviation
-addition = 0
-
-for height in heights_list:
-    difference = (height - average_height) ** 2
-    addition += difference
-
-std = math.sqrt(addition / count_of_heights)
-print(f'The standard deviation is {std}')  # Printing standard deviation
+print(f"Mean, Standard Deviation: {mean_n_std(heights_list)}")

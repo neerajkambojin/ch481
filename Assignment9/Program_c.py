@@ -3,39 +3,14 @@ If we only have to find h, for which results are within 1%, the increment in n (
 to make the code faster but the resulting h value will not be the maximum for which the results are within 1%."""
 
 import numpy as np
-
-
-# Function for Trapezoidal Integral
-def trap_int(f_x, h_val):
-    integral = 0
-    n = len(f_x)
-    for i in range(n):
-        if i == 0 or i == n - 1:
-            integral += f_x[i]
-        else:
-            integral += 2 * f_x[i]
-    return integral * (h_val / 2)
-
-
-# Function for Simpsons Integral
-def sim_int(f_x, h_val):
-    n = len(f_x)
-    integral = 0
-    for i in range(n):
-        if i == 0 or i == n - 1:
-            integral += f_x[i]
-        elif i % 2 != 0:
-            integral += 4 * f_x[i]
-        else:
-            integral += 2 * f_x[i]
-    return integral * (h_val / 3)
+from Program_b import trap_int, sim_int
 
 
 def h_val(a_val, b_val):
     n_val = b_val - a_val + 1  # Initializing n value (11) for h = 1
     while True:
         h_val = (b_val - a_val) / (n_val - 1)  # Calculating h value according to number of terms (n)
-        f_x = np.empty(0)  # Initializing fuction values list
+        f_x = np.empty(0)  # Initializing function values list
         x = a_val
         # Generating array of function values
         for i in range(n_val):

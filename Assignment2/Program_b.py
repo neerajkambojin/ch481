@@ -2,25 +2,15 @@
 
 import math  # Importing math module
 
-heights = [4.5, 4.9, 4.8, 5.3, 5.7, 5.0, 4.8, 5.2, 4.7, 5.1, 4.4, 4.9]  # Making list of heights
 
-count = len(heights)  # Counting number of students
+def mean_n_std(data):
+    n = len(data)
+    mean = sum(data) / n
+    std_dev = math.sqrt(sum([(i - mean) ** 2 for i in data]) / n)
+    return mean, std_dev
 
-total = sum(heights)  # Sum of heights
 
-average_height = total / count  # Calculating average height
+if __name__ == "__main__":
+    heights = [4.5, 4.9, 4.8, 5.3, 5.7, 5.0, 4.8, 5.2, 4.7, 5.1, 4.4, 4.9]  # Making list of heights
 
-print(f'\nThe average height is {average_height}\n')  # Printing average height
-
-addition = 0
-
-# Calculation of standard deviation
-
-for height in heights:
-    difference = (height - average_height) ** 2
-
-    addition += difference
-
-std = math.sqrt(addition / count)
-
-print(f'The standard deviation is {std}')  # Printing standard deviation
+    print(f"Mean, Standard Deviation: {mean_n_std(heights)}")

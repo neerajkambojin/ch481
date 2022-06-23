@@ -3,63 +3,70 @@ import numpy as np
 import random
 
 
-def pivote_pi(mat, i_val, ml):  # Function for pivoting and generating permutation matrix Pi
-    global pi
-    pi = np.identity(ml)  # Initializing Pi
-    for j_val in range(ml - i_val):
-        if abs(mat[j_val + i_val, i_val]) == max(abs(mat[i_val:, i_val])):  # Finding row containing the largest element
-            mat[[i_val, j_val + i_val]] = mat[[j_val + i_val, i_val]]  # Pivoting
-            pi[[i_val, j_val + i_val]] = pi[[j_val + i_val, i_val]]  # Generating Pi
-    return mat, pi
+class Matrix:
+    def mat_input(self):
+        try:
+            self.mat_len = int(input("Order of matrix (Hit enter to take a random matrix): "))
+            print("Enter matrix elements: ")
+            self.matrix = np.empty((self.mat_len, self.mat_len))
+            for i in range(self.mat_len):
+                for j in range(self.mat_len):
+                    self.matrix[i, j] = float(input(f"A{i + 1}{j + 1}: "))
+        except ValueError:
+            print("\nRandom matrix taken!!!")
+            self.mat_len = random.randint(2, 5)
+            self.matrix = np.empty((self.mat_len, self.mat_len))
+            for i in range(self.mat_len):
+                for j in range(self.mat_len):
+                    self.matrix[i, j] = random.randint(-10, 10)
+            print(self.matrix)
 
+    def pivote_pi(self, i_val):  # Function for pivoting and generating permutation matrix Pi
+        self.swap = 0
+        self.pi = np.identity(self.mat_len)  # Initializing Pi
+        for j_val in range(self.mat_len - i_val):
+            if abs(self.matrix[j_val + i_val, i_val]) == max(
+                    abs(self.matrix[i_val:, i_val])):  # Finding row containing the largest element
+                self.matrix[[i_val, j_val + i_val]] = self.matrix[[j_val + i_val, i_val]]  # Pivoting
+                if j_val + i_val != i_val:  # To count number of swaps
+                    self.swap = 1
+                self.pi[[i_val, j_val + i_val]] = self.pi[[j_val + i_val, i_val]]  # Generating Pi
 
-def eliminate_li(mat, i_val, ml):  # For elimination and Li
-    global li
-    li = np.identity(ml)  # Initializing Li
-    for j_val in range(ml - i_val - 1):
-        fact = (mat[i_val + j_val + 1, i_val]) / mat[i_val, i_val]
-        mat[i_val + j_val + 1] -= (mat[i_val] * fact)  # Elimination
-        li[i_val + j_val + 1, i_val] = fact  # Generating Li
-    return mat, li
+    def eliminate_li(self, i_val):  # For elimination and Li
+        self.li = np.identity(self.mat_len)  # Initializing Li
+        for j_val in range(self.mat_len - i_val - 1):
+            fact = (self.matrix[i_val + j_val + 1, i_val]) / self.matrix[i_val, i_val]
+            self.matrix[i_val + j_val + 1] -= (self.matrix[i_val] * fact)  # Elimination
+            self.li[i_val + j_val + 1, i_val] = fact  # Generating Li
 
+    def lu_decompose(self):
+        self.o_mat = self.matrix.copy()
+        self.ptot = np.identity(self.mat_len)  # Initializing Ptot
+        self.ltot = np.identity(self.mat_len)  # Initializing Ltot
+        self.count = 0
+        for i_val in range(self.mat_len):
+            self.pivote_pi(i_val)
+            self.count += self.swap
+            self.ptot = np.matmul(self.ptot, self.pi)
+            self.eliminate_li(i_val)
+            self.ltot = np.matmul(self.pi, np.matmul(self.ltot, np.matmul(self.pi, self.li)))
+        self.p, self.l, self.u = self.ptot, self.ltot, self.matrix
 
-def lu_decompose(mat):
-    ml = len(mat)
-    ptot = np.identity(ml)  # Initializing Ptot
-    ltot = np.identity(ml)  # Initializing Ltot
-    for i_val in range(ml):
-        pivote_pi(mat, i_val, ml)
-        ptot = np.matmul(ptot, pi)
-        eliminate_li(mat, i_val, ml)
-        ltot = np.matmul(pi, np.matmul(ltot, np.matmul(pi, li)))
-    p, l, u = ptot, ltot, mat
-    # Printing outputs
-    print("P: ")
-    print(p)
-    print("L: ")
-    print(np.round(l, 10))
-    print("U: ")
-    print(np.round(u, 10))
-    print("Original Matrix (P.L.U): ")
-    print(np.matmul(ptot, np.matmul(ltot, mat)))
-    return p, l, u  # Optional, as we're already printing out values
+        print(f"P: \n{self.p}")
+        print(f"L: \n{self.l}")
+        print(f"U: \n{self.u}")
+        print(f"Origin Matrix: \n{np.matmul(self.ptot, np.matmul(self.ltot, self.matrix))}")
+        self.matrix = self.o_mat.copy()
+
+    def lu_det(self):
+        self.lu_decompose()
+        det_p = np.power(-1, self.count)
+        det_u = np.prod(np.diag(self.u))  # l not required as its diagonal contains 1s and hence its det = 1
+        print(f"\nDeterminant: {round(det_u * det_p, 10)}")
 
 
 # Matrix input
-try:
-    mat_len = int(input("Order of matrix (Hit enter to take a random matrix): "))
-    print("Enter matrix elements: ")
-    matrix = np.empty((mat_len, mat_len))
-    for i in range(mat_len):
-        for j in range(mat_len):
-            matrix[i, j] = float(input(f"A{i + 1}{j + 1}: "))
-except ValueError:
-    print("\nRandom matrix taken!!!")
-    mat_len = random.randint(2, 5)
-    matrix = np.empty((mat_len, mat_len))
-    for i in range(mat_len):
-        for j in range(mat_len):
-            matrix[i, j] = random.randint(-10, 10)
-    print(matrix)
-
-lu_decompose(matrix)
+if __name__ == "__main__":
+    my_mat = Matrix()
+    my_mat.mat_input()
+    my_mat.lu_decompose()
